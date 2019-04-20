@@ -1,0 +1,40 @@
+@import '../colors.scss';
+
+$border-rounding: 4px;
+
+.SearchBar {
+    background-color: $ml-yellow;
+    padding: 9px;
+}
+
+.MLLogo {
+    margin-right: 26px; 
+}
+
+.FlexInput {
+    display: flex;
+    overflow: hidden;
+}
+
+.SearchInput {
+    border-width: 0;
+    border-radius: $border-rounding 0 0 $border-rounding;
+    padding-left: 16px;
+    padding-right: 16px;
+    vertical-align: middle;
+    font-size: 18px;
+    width: 100%;
+}
+
+.SearchButton {
+    background-color: $ml-background;
+    border-width: 0;
+    border-radius: 0 $border-rounding $border-rounding 0;
+    padding: 11px;
+    vertical-align: middle;
+}
+
+input:focus, button:focus {
+    outline: none;
+}
+

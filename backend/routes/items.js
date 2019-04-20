@@ -32,7 +32,7 @@ async function fetchJson(url) {
 /**
  * Gets a item by its id.
  */
-router.get('/:id', asyncMiddleware(async (req, res, next) => {
+router.get('/:id', asyncMiddleware(async (req, res) => {
 
   const id = req.params.id;
 
@@ -47,6 +47,7 @@ router.get('/:id', asyncMiddleware(async (req, res, next) => {
   const description = await fetchJson(`${ENDPOINT_ITEMS}/${id}/description`);
 
   result.item = transformItem(item);
+  result.item.sold_quantity = item.sold_quantity;
   result.item.description = description.plain_text;
 
   res.send(result);
@@ -55,7 +56,7 @@ router.get('/:id', asyncMiddleware(async (req, res, next) => {
 /**
  * Search by query.
  */
-router.get('/', asyncMiddleware(async (req, res, next) => {
+router.get('/', asyncMiddleware(async (req, res) => {
 
   const query = req.query.q;
 
