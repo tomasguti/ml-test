@@ -4,7 +4,8 @@ $border-rounding: 4px;
 
 .SearchBar {
     background-color: $ml-yellow;
-    padding: 9px;
+    padding-top: 9px;
+    padding-bottom: 9px;
 }
 
 .MLLogo {
@@ -23,6 +24,7 @@ $border-rounding: 4px;
     padding-right: 16px;
     vertical-align: middle;
     font-size: 18px;
+    font-family: Proxima Nova;
     width: 100%;
 }
 

@@ -27,13 +27,11 @@ class SearchBar extends Component {
             <div className="SearchBar">
                 <Container fluid>
                     <Row>
-                        <Col md={1}></Col>
-                        <Col md={10} className="FlexInput">
+                        <Col md={10} offset={{ md: 1 }} className="FlexInput">
                             <img className="MLLogo" src={logo} alt="ML"></img>
                             <input className="SearchInput" type="text" value={this.state.value} placeholder='Nunca dejes de buscar' onChange={this.handleChange} />
                             <input className="SearchButton" type="image" alt="search" src={searchIcon} onClick={this.handleSubmit} />            
                         </Col>
-                        <Col md={1}></Col>
                     </Row>
                 </Container>
             </div>

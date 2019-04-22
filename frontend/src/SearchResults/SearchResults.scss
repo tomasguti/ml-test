@@ -1,6 +1,34 @@
 @import '../colors.scss';
 
-.Container {
+.SearchResults {
     height: 100%;
+    background-color: $ml-background;
 }
 
+.Categories {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    color: $ml-medium-grey;
+    text-align: left;
+    font-size: 14px;
+    .LastCategory {
+        font-weight: bold;
+    }
+}
+
+.Flex {
+    display: flex;
+    overflow: hidden;
+}
+
+.ItemsContainer {
+    background: white;
+    border-radius: 4px;
+}
+
+.Separator {
+    height: 1px;
+    background: $ml-background;
+    margin-right: 20px;
+    margin-left: 20px;
+}

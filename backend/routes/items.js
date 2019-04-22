@@ -3,8 +3,17 @@ var express = require('express');
 var router = express.Router();
 var got = require('got');
 
+// Map the currencies to have a cache. Since they are unlikely to change.
+var currencies = require('../data/currencies.json');
+var currenciesSymbols = new Object();
+for (let currency of currencies) {
+  currenciesSymbols[currency.id] = currency.symbol;
+}
+
 const ENDPOINT_SEARCH = 'https://api.mercadolibre.com/sites/MLA/search';
 const ENDPOINT_ITEMS = 'https://api.mercadolibre.com/items';
+const ENDPOINT_CATEGORIES = 'https://api.mercadolibre.com/categories';
+
 const SEARCH_LIMIT = 4;
 
 const AUTHOR = {
@@ -46,6 +55,7 @@ router.get('/:id', asyncMiddleware(async (req, res) => {
   const item = await fetchJson(`${ENDPOINT_ITEMS}/${id}`);
   const description = await fetchJson(`${ENDPOINT_ITEMS}/${id}/description`);
 
+  result.categories = await getCategoryPathById(item.category_id);
   result.item = transformItem(item);
   result.item.sold_quantity = item.sold_quantity;
   result.item.description = description.plain_text;
@@ -68,7 +78,7 @@ router.get('/', asyncMiddleware(async (req, res) => {
 
   const result = new Object();
   result.author = AUTHOR;
-  result.categories = getCategories(search);
+  result.categories = getCategoryPathFromFilters(search.filters);
   result.items = new Array();
 
   if (search.results) {
@@ -90,6 +100,9 @@ function transformItem(item) {
   newItem.price = getPrice(item);
   newItem.picture = getPicture(item);
   newItem.condition = item.condition;
+  if (item.address) {
+    newItem.address_state = item.address.state_name;
+  }
   newItem.free_shipping = item.shipping.free_shipping;
 
   return newItem;
@@ -130,7 +143,7 @@ function getPrice(item) {
     price.decimals = 0;
   }
 
-  price.currency = item.currency_id;
+  price.currency = currenciesSymbols[item.currency_id];
   price.amount = parseInt(splitted[0]);
 
   return price;
@@ -140,29 +153,42 @@ function getPrice(item) {
  * Gets the available categories from the endpoint filter.
  * @param {Object} search the object returned from the search endpoint
  */
-function getCategories(search) {
+function getCategoryPathFromFilters(filters) {
 
+  let result = [];
+
+  // Get the category filter.
   const CATEGORY_ID = 'category';
   const getCategoryFilterById = filter => filter.id === CATEGORY_ID;
+  let categories = filters.find(getCategoryFilterById);
+
+  if (categories && categories.values && categories.values.length > 0) {
+    const first = categories.values[0];
+    for (let subcategory of first.path_from_root) {
+      result.push(subcategory.name);
+    }
+  }
+
+  return result;
+}
+
+/**
+ * Returns the category path from root as an ordered string array.
+ * @param {string} category_id the category id
+ */
+async function getCategoryPathById(category_id) {
   
-  let categories;
+  let result = [];
+  let category = await fetchJson(`${ENDPOINT_CATEGORIES}/${category_id}`);
 
-  // Search them in the filters.
-  if (search.filters) {
-    categories = search.filters.find(getCategoryFilterById);
+  if (category && category.path_from_root && category.path_from_root.length > 0) {
+    for (let subcategory of category.path_from_root) {
+      console.log(subcategory.name)
+      result.push(subcategory.name);
+    }
   }
 
-  // If not present, search them in the available_filters.
-  if (!categories && search.available_filters) {
-    categories = search.available_filters.find(getCategoryFilterById);
-  }
-
-  // Push all the available categories.
-  for (let category of categories.values) {
-    categories.push(category.name);
-  }
-
-  return categories || [];
+  return result;
 }
 
 module.exports = router;
