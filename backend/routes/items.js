@@ -118,9 +118,10 @@ function getPicture(item) {
 
   if (item.pictures && item.pictures.length > 0) {
     const firstPicture = item.pictures.shift();
-    picture = firstPicture.url;
+    picture = firstPicture.url.replace('-O.', '-B.');
   } else if (item.thumbnail) {
-    picture = item.thumbnail;
+    // Replaces the last character of the URL to request a bigger thumbnail
+    picture = item.thumbnail.replace('-I.', '-N.');
   }
 
   return picture;
@@ -183,7 +184,6 @@ async function getCategoryPathById(category_id) {
 
   if (category && category.path_from_root && category.path_from_root.length > 0) {
     for (let subcategory of category.path_from_root) {
-      console.log(subcategory.name)
       result.push(subcategory.name);
     }
   }

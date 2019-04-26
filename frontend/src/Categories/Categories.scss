@@ -1,0 +1,14 @@
+@import '../colors.scss';
+@import '../commons.scss';
+
+.Categories {
+    @extend %DisableSelection;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    color: $ml-medium-grey;
+    text-align: left;
+    font-size: 14px;
+    .LastCategory {
+        font-weight: bold;
+    }
+}

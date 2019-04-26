@@ -1,2 +1,74 @@
 @import '../colors.scss';
+@import '../commons.scss';
+
+.ItemDetails {
+    background-color: $ml-background;
+}
+
+.ItemContainer {
+    @extend %RoundedContainer;
+}
+
+.ItemPicture {
+    @extend %DisableSelection;
+    width: 680px;
+}
+
+.NoGutter {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.BuyContainer {
+    padding: 32px;
+    .ItemStats {
+        margin-bottom: 16px;
+    }
+    .ItemTitle {
+        font-size: 24px;
+        font-weight: bold;
+        color: black;
+        margin-bottom: 32px;
+    }
+    .ItemPrice {
+        font-size: 46px;
+        color: black;
+        margin-bottom: 32px;
+        white-space: nowrap;
+    }
+    .BuyButton {
+        background-color: $ml-light-blue;
+        border: none;
+        border-radius: 4px;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        width: 100%;
+        height: 40px;
+      }
+}
+
+.PictureAndBuyContainer {
+    padding: 0;
+}
+
+.DescriptionContainer {
+    // max-width: 616px; // 680 - 32 * 2
+    padding: 32px;
+    .DescriptionTitle {
+        font-size: 28px;
+        text-align: left;
+        white-space: pre-wrap;
+        font-weight: bold;
+        color: black;
+    }
+    .Description {
+        margin-top: 32px;
+        font-size: 16px;
+        text-align: left;
+        white-space: pre-wrap;
+    }
+}
 

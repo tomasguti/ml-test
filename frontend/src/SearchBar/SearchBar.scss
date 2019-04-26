@@ -1,8 +1,10 @@
 @import '../colors.scss';
+@import '../commons.scss';
 
 $border-rounding: 4px;
 
 .SearchBar {
+    @extend %DisableSelection;
     background-color: $ml-yellow;
     padding-top: 9px;
     padding-bottom: 9px;
