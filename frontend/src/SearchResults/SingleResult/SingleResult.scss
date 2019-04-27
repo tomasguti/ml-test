@@ -7,13 +7,29 @@
     color: $ml-dark-grey;
 }
 
-.Thumbnail {
+%DisplayImg {
     @extend %DisableSelection;
-    width: 180px;
-    height: 180px;
     border-radius: 4px;
     margin: 16px;
     float: left;
+}
+
+.Thumbnail {
+    @extend %DisplayImg;
+}
+
+.ImgPlaceholderSmall {
+    @extend %DisplayImg;
+    width: 90px;
+    height: 90px;
+    background-color: $ml-background;
+}
+
+.ImgPlaceholderBig {
+    @extend %DisplayImg;
+    width: 180px;
+    height: 180px;
+    background-color: $ml-background;
 }
 
 .Address {
@@ -25,6 +41,7 @@
     font-size: 24px;
     margin-top: 32px;
     color: black;
+    white-space: nowrap;
 }
 
 .Title {

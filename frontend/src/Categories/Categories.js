@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import chevronRight from '../assets/chevron-right.svg';
 import './Categories.scss';
 import { Row, Col } from 'react-grid-system';
+import Img from 'react-image';
 
 class Categories extends Component {
     render() {
@@ -13,7 +14,7 @@ class Categories extends Component {
                 );
             } else {
                 return (
-                    <span key={i}>{category} <img src={chevronRight} alt="chevronRight" width="16" height="16" /> </span>
+                    <span key={i}>{category} <Img src={chevronRight} alt="chevronRight" width="16" height="16" /> </span>
                 );
             }
         });

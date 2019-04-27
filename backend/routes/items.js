@@ -118,10 +118,10 @@ function getPicture(item) {
 
   if (item.pictures && item.pictures.length > 0) {
     const firstPicture = item.pictures.shift();
-    picture = firstPicture.url.replace('-O.', '-B.');
+    picture = firstPicture.url;
   } else if (item.thumbnail) {
     // Replaces the last character of the URL to request a bigger thumbnail
-    picture = item.thumbnail.replace('-I.', '-N.');
+    picture = item.thumbnail;
   }
 
   return picture;

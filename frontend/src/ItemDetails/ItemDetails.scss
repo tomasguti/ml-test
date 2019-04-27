@@ -9,14 +9,25 @@
     @extend %RoundedContainer;
 }
 
-.ItemPicture {
+%ItemPicture {
     @extend %DisableSelection;
-    width: 680px;
+    margin-top: 32px;
 }
 
-.NoGutter {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
+.ItemPicture {
+    @extend %ItemPicture
+}
+
+.PicturePlaceHolderSmall {
+    @extend %ItemPicture;
+    width: 340px;
+    height: 340px;
+}
+
+.PicturePlaceHolderBig {
+    @extend %ItemPicture;
+    width: 680px;
+    height: 680px;
 }
 
 .BuyContainer {
