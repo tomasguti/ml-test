@@ -4,6 +4,8 @@ import Categories from '../Categories/Categories';
 import { Container, Row, Col, Hidden, Visible } from 'react-grid-system';
 import { formatPrice } from '../utils';
 import Spinner from '../Spinner/Spinner';
+import sanitizeHtml from 'sanitize-html';
+import { Redirect } from 'react-router-dom';
 import Img from 'react-image';
 
 const API = 'http://localhost:3000/api/items/';
@@ -12,8 +14,8 @@ class ItemDetails extends Component {
 
     constructor(props) {
         super(props);
-        const item_id = props.match.params.id;
-        this.state = { id: item_id, item: { price: {}, picture: '' }, categories: [], isLoading: false };
+        const item_id = sanitizeHtml(props.match.params.id, { allowedTags: [], allowedAttributes: {} });
+        this.state = { id: item_id, item: { price: {}, picture: '' }, categories: [], isLoading: false, error: false };
     }
 
     componentDidMount() {
@@ -22,12 +24,22 @@ class ItemDetails extends Component {
         if (id) {
             fetch(API + id)
                 .then(response => response.json())
-                .then(data => this.setState({ item: data.item, categories: data.categories, isLoading: false }))
-            // .catch(() => {});
+                .then(data => this.setState({ item: data.item, categories: data.categories, isLoading: false, error: false }))
+                .catch(() => this.setState({ error: true }));
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.item !== this.state.item) {
+            document.title = this.state.item.title + ' - ' + formatPrice(this.state.item.price, true) + ' en Mercado Libre';
         }
     }
 
     render() {
+
+        if (this.state.error) {
+            return <Redirect to="/error" />
+        }
 
         if (this.state.isLoading) {
             return <Spinner />;
@@ -60,7 +72,10 @@ class ItemDetails extends Component {
                                         {this.state.item.condition === 'new' ? 'Nuevo' : 'Usado'} - {this.state.item.sold_quantity} vendidos
                                     </div>
                                     <div className="ItemTitle">{this.state.item.title}</div>
-                                    <div className="ItemPrice">{formatPrice(this.state.item.price)}</div>
+                                    <div className="ItemPrice">
+                                        {formatPrice(this.state.item.price)}
+                                        <span className="ItemDecimals">{this.state.item.price.decimals ? this.state.item.price.decimals : ''}</span>
+                                    </div>
                                     <button className="BuyButton">Comprar</button>
                                 </div>
                             </Col>

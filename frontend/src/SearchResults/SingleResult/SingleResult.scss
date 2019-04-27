@@ -42,12 +42,18 @@
     margin-top: 32px;
     color: black;
     white-space: nowrap;
+    .PriceDecimals {
+        font-size: 12px;
+        position: absolute;
+        margin: 2px;
+    }
 }
 
 .Title {
     font-size: 18px;
     margin-top: 32px;
     margin-bottom: 16px;
+    margin-right: 32px;
     color: black;
 }
 

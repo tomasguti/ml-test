@@ -4,19 +4,19 @@ import logo from '../assets/Logo_ML.png';
 import searchIcon from '../assets/ic_Search.png';
 import { Container, Row, Col } from 'react-grid-system';
 import { Link, withRouter } from 'react-router-dom'
-import QueryString from 'query-string';
+import { parseSearch } from '../utils';
 import Img from 'react-image';
 
 const ENTER_PC = 27;
 const ENTER_MOBILE = 13;
+const DEFAULT_TITLE = 'Mercado Libre Argentina';
 
 class SearchBar extends Component {
     constructor(props) {
         super(props);
 
-        const parsed = QueryString.parse(props.location.search);
-        const initialValue = parsed.search ? parsed.search : '';
-        this.state = { value: initialValue };
+        const search = parseSearch(props);
+        this.state = { value: search };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -35,9 +35,13 @@ class SearchBar extends Component {
                 // Clear input when leaving search
                 this.setState({ value: '' });
             } else {
-                const parsed = QueryString.parse(this.props.location.search);
-                this.setState({ value: parsed.search });
+                const search = parseSearch(this.props);
+                this.setState({ value: search });
             }
+        }
+
+        if (!this.props.match.params.id && (!this.props.location.search || this.props.location.search === '')) {
+            document.title = DEFAULT_TITLE;
         }
     }
 

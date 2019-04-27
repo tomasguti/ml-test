@@ -21,13 +21,18 @@ class SingleResult extends Component {
                     <Col lg={9.6} align="start" className="NoGutter">
                         <Link to={'/items/' + this.state.item.id}>
                             <Hidden xs>
-                                <Img className="Thumbnail" alt="Thumbnail" src={this.state.item.picture.replace('-I.', '-N.')} loader={<div className="ImgPlaceholderBig"/>} width="180" height="180"></Img>
+                                <Img className="Thumbnail" alt="Thumbnail" src={this.state.item.picture.replace('-I.', '-N.')} loader={<div className="ImgPlaceholderBig" />} width="180" height="180"></Img>
                             </Hidden>
                             <Visible xs>
-                                <Img className="Thumbnail" alt="Thumbnail" src={this.state.item.picture} loader={<div className="ImgPlaceholderSmall"/>} width="90" height="90"></Img>
+                                <Img className="Thumbnail" alt="Thumbnail" src={this.state.item.picture} loader={<div className="ImgPlaceholderSmall" />} width="90" height="90"></Img>
                             </Visible>
                         </Link>
-                        <div className="Price">{formatPrice(this.state.item.price)} {this.state.item.free_shipping ? freeShipping : null}</div>
+                        <div className="Price">
+                            <span>
+                                {formatPrice(this.state.item.price)} {this.state.item.free_shipping ? freeShipping : null}
+                            </span>
+                            <span className="PriceDecimals">{this.state.item.price.decimals ? this.state.item.decimals : ''}</span>
+                        </div>
                         <Row>
                             <Link to={'/items/' + this.state.item.id} style={{ textDecoration: 'none' }}>
                                 <div className="Title">

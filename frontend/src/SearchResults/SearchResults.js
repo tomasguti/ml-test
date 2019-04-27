@@ -3,8 +3,9 @@ import './SearchResults.scss';
 import { Container, Row, Col } from 'react-grid-system';
 import SingleResult from './SingleResult/SingleResult';
 import Categories from '../Categories/Categories';
-import QueryString from 'query-string';
 import Spinner from '../Spinner/Spinner';
+import { Redirect } from 'react-router-dom';
+import { parseSearch } from '../utils';
 
 const API = 'http://localhost:3000/api/items?q=';
 
@@ -13,18 +14,19 @@ class SearchResults extends Component {
     constructor(props) {
         super(props);
 
-        const parsed = QueryString.parse(props.location.search);
-        this.state = { search: parsed.search, items: [], categories: [], isLoading: false };
+        const search = parseSearch(props);
+        this.state = { search: search, items: [], categories: [], isLoading: false, error: false };
     }
 
     updateSearch() {
         this.setState({ isLoading: true });
         const search = this.state.search;
         if (search && search !== '') {
+            this.setTitle(search);
             fetch(API + search)
                 .then(response => response.json())
-                .then(data => this.setState({ items: data.items, categories: data.categories, isLoading: false }))
-            // .catch(() => {});
+                .then(data => this.setState({ items: data.items, categories: data.categories, isLoading: false, error: false }))
+                .catch(() => this.setState({ error: true }));
         } else {
             this.setState({ isLoading: false });
         }
@@ -36,18 +38,28 @@ class SearchResults extends Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (this.props.location.search !== prevProps.location.search) {
-            const parsed = QueryString.parse(this.props.location.search);
-            this.setState({ search: parsed.search });
+            const search = parseSearch(this.props);
+            this.setState({ search: search });
         }
         if (this.state.search !== prevState.search) {
             this.updateSearch();
         }
     }
 
+    setTitle(title) {
+        const titleString = title.toLowerCase();
+        const capsTitle = titleString.charAt(0).toUpperCase() + titleString.slice(1);
+        document.title = capsTitle + ' en Mercado Libre';
+    }
+
     render() {
 
+        if (this.state.error) {
+            return <Redirect to="/error" />
+        }
+
         if (this.state.isLoading) {
-            return <Spinner/>;
+            return <Spinner />;
         }
 
         const separator = <div className="Separator"></div>;

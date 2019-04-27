@@ -1,13 +1,15 @@
-var createError = require('http-errors');
-var express = require('express');
-var router = express.Router();
-var got = require('got');
+const createError = require('http-errors');
+const express = require('express');
+const router = express.Router();
+const got = require('got');
 
 // Map the currencies to have a cache. Since they are unlikely to change.
-var currencies = require('../data/currencies.json');
-var currenciesSymbols = new Object();
+const currencies = require('../data/currencies.json');
+const currenciesSymbols = new Object();
+const currenciesDecimalPlaces = new Object();
 for (let currency of currencies) {
   currenciesSymbols[currency.id] = currency.symbol;
+  currenciesDecimalPlaces[currency.id] = currency.decimal_places;
 }
 
 const ENDPOINT_SEARCH = 'https://api.mercadolibre.com/sites/MLA/search';
@@ -129,23 +131,31 @@ function getPicture(item) {
 
 /**
  * Splits the item price into amount and decimals,
- * adds the currency and returns a price object.
+ * adds the currency symbol and returns a price object.
  * @param {Object} item an item result from the endpoint
  */
 function getPrice(item) {
 
   const price = new Object();
-  const number = item.price.toString();
-  const splitted = number.split('.');
 
-  if (splitted.length > 1) {
-    price.decimals = parseInt(splitted[1]);
+  const currency_id = item.currency_id;
+  price.currency = currenciesSymbols[currency_id];
+
+  const currencyDecimalPlaces = currenciesDecimalPlaces[currency_id];
+  if (currencyDecimalPlaces > 0) {
+    const number = item.price.toString();
+    const splitted = number.split('.');
+    price.amount = parseInt(splitted[0]);
+    if (splitted.length > 1) {
+      price.decimals = parseInt(splitted[1]);
+    } else {
+      price.decimals = 0;
+    }
   } else {
+    // Some currencies just don't display decimals
+    price.amount = Math.round(item.price);
     price.decimals = 0;
   }
-
-  price.currency = currenciesSymbols[item.currency_id];
-  price.amount = parseInt(splitted[0]);
 
   return price;
 }
@@ -178,7 +188,7 @@ function getCategoryPathFromFilters(filters) {
  * @param {string} category_id the category id
  */
 async function getCategoryPathById(category_id) {
-  
+
   let result = [];
   let category = await fetchJson(`${ENDPOINT_CATEGORIES}/${category_id}`);
 
