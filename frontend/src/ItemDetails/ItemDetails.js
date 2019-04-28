@@ -8,7 +8,7 @@ import sanitizeHtml from 'sanitize-html';
 import { Redirect } from 'react-router-dom';
 import Img from 'react-image';
 
-const API = 'http://localhost:3000/api/items/';
+const API = '/api/items/';
 
 class ItemDetails extends Component {
 

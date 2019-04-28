@@ -2,6 +2,7 @@ const createError = require('http-errors');
 const express = require('express');
 const router = express.Router();
 const got = require('got');
+const he = require('he');
 
 // Map the currencies to have a cache. Since they are unlikely to change.
 const currencies = require('../data/currencies.json');
@@ -98,7 +99,7 @@ function transformItem(item) {
   const newItem = new Object();
 
   newItem.id = item.id;
-  newItem.title = item.title;
+  newItem.title = he.decode(item.title);
   newItem.price = getPrice(item);
   newItem.picture = getPicture(item);
   newItem.condition = item.condition;

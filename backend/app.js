@@ -1,6 +1,9 @@
 var createError = require('http-errors');
 var express = require('express');
 var logger = require('morgan');
+var path = require('path');
+
+var FRONTEND_PATH = path.join(__dirname, '../frontend/build');
 
 var itemsRouter = require('./routes/items');
 
@@ -16,7 +19,14 @@ app.use(function (req, res, next) {
   next();
 });
 
+// Backend API
 app.use('/api/items', itemsRouter);
+
+// Frontend server
+app.use(express.static(FRONTEND_PATH));
+app.get('*', function (req, res) {
+  res.sendFile('index.html', { root: FRONTEND_PATH });
+});
 
 // Catch 404 and forward to error handler
 app.use(function (req, res, next) {

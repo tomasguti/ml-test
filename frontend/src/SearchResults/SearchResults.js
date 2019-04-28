@@ -7,7 +7,7 @@ import Spinner from '../Spinner/Spinner';
 import { Redirect } from 'react-router-dom';
 import { parseSearch } from '../utils';
 
-const API = 'http://localhost:3000/api/items?q=';
+const API = '/api/items?q=';
 
 class SearchResults extends Component {
 
