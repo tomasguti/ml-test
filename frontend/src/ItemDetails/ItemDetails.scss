@@ -43,13 +43,14 @@
     }
     .ItemPrice {
         font-size: 46px;
+        font-weight: bold;
         color: black;
         margin-bottom: 32px;
         white-space: nowrap;
         .ItemDecimals {
             font-size: 23px;
             position: absolute;
-            margin: 3px;
+            margin: 2px;
         }
     }
     .BuyButton {

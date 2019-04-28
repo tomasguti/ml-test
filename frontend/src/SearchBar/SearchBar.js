@@ -3,7 +3,7 @@ import './SearchBar.scss';
 import logo from '../assets/Logo_ML.png';
 import searchIcon from '../assets/ic_Search.png';
 import { Container, Row, Col } from 'react-grid-system';
-import { Link, withRouter } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { parseSearch } from '../utils';
 import Img from 'react-image';
 
@@ -81,4 +81,4 @@ class SearchBar extends Component {
     }
 }
 
-export default withRouter(SearchBar);
+export default SearchBar;

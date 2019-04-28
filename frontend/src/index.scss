@@ -1,7 +1,10 @@
 
 @font-face {
   font-family: Proxima Nova;
-  src: url("assets/fonts/ProximaNova-Light.woff") format("woff"), url("assets/fonts/ProximaNova-Light.ttf")  format("truetype");
+  src: local('Proxima Nova Light'),
+       url('assets/fonts/ProximaNova-Light.otf') format('otf'),
+       url("assets/fonts/ProximaNova-Light.woff") format("woff"),
+       url("assets/fonts/ProximaNova-Light.ttf") format("truetype");
 }
 
 body {

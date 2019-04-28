@@ -143,7 +143,7 @@ function getPrice(item) {
 
   const currencyDecimalPlaces = currenciesDecimalPlaces[currency_id];
   if (currencyDecimalPlaces > 0) {
-    const number = item.price.toString();
+    const number = item.price.toFixed(currencyDecimalPlaces);
     const splitted = number.split('.');
     price.amount = parseInt(splitted[0]);
     if (splitted.length > 1) {

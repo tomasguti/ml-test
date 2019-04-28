@@ -1,0 +1,66 @@
+{
+    "author": {
+        "name": "Tomás",
+        "lastname": "Gutiérrez"
+    },
+    "categories": [
+        "Hogar, Muebles y Jardín",
+        "Jardines y Exteriores",
+        "Jardinería",
+        "Plantas"
+    ],
+    "items": [
+        {
+            "id": "MLA629155827",
+            "title": "Lithops Cactus Piedra Combo 10 Unidades Plantas Raras (av,l)",
+            "price": {
+                "currency": "$",
+                "amount": 700,
+                "decimals": 0
+            },
+            "picture": "http://mla-s2-p.mlstatic.com/697925-MLA29400112158_022019-I.jpg",
+            "condition": "new",
+            "address_state": "Capital Federal",
+            "free_shipping": false
+        },
+        {
+            "id": "MLA628759086",
+            "title": "Cerco Vivo - Crataegus - 40 Cm De Altura - Envios",
+            "price": {
+                "currency": "$",
+                "amount": 56,
+                "decimals": 90
+            },
+            "picture": "http://mla-s1-p.mlstatic.com/853238-MLA29842302538_042019-I.jpg",
+            "condition": "new",
+            "address_state": "San Juan",
+            "free_shipping": false
+        },
+        {
+            "id": "MLA760318141",
+            "title": "Agapanthus Oferta",
+            "price": {
+                "currency": "$",
+                "amount": 65,
+                "decimals": 0
+            },
+            "picture": "http://mla-s2-p.mlstatic.com/919811-MLA20658591990_042016-I.jpg",
+            "condition": "used",
+            "address_state": "Buenos Aires",
+            "free_shipping": false
+        },
+        {
+            "id": "MLA619401958",
+            "title": "Pozo Ciego Negro Fosa Séptica Absorbente Sistema Vetiver",
+            "price": {
+                "currency": "$",
+                "amount": 70,
+                "decimals": 0
+            },
+            "picture": "http://mla-s1-p.mlstatic.com/961550-MLA26634906170_012018-I.jpg",
+            "condition": "new",
+            "address_state": "Buenos Aires",
+            "free_shipping": false
+        }
+    ]
+}

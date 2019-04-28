@@ -31,7 +31,7 @@ class SingleResult extends Component {
                             <span>
                                 {formatPrice(this.state.item.price)} {this.state.item.free_shipping ? freeShipping : null}
                             </span>
-                            <span className="PriceDecimals">{this.state.item.price.decimals ? this.state.item.decimals : ''}</span>
+                            <span className="PriceDecimals">{this.state.item.price.decimals ? this.state.item.price.decimals : ''}</span>
                         </div>
                         <Row>
                             <Link to={'/items/' + this.state.item.id} style={{ textDecoration: 'none' }}>
